@@ -30,7 +30,9 @@ class AuthController extends Controller
         ], Response::HTTP_OK)->withCookie($cookie);
     }
 
-    public function register() {}
+    public function register(Request $request) {
+        
+    }
 
     public function logout() {}
 
