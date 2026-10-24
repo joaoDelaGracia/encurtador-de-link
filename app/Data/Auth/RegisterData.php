@@ -25,6 +25,5 @@ class RegisterData extends Data
         public string $email,
         #[StringType, Required, Confirmed, Password(8, true, true, true, true), ]
         public string $password,
-        public string $passwordConfirmation
     ) {}
 }
