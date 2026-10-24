@@ -10,9 +10,7 @@ use Spatie\LaravelData\Data;
 class LoginData extends Data
 {
     public function __construct(
-        #[Required, Email(Email::RfcValidation)]
         public string $email,
-        #[Required, StringType]
         public string $password,
     ) {}
 }
