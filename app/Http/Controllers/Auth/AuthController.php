@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Data\Auth\LoginData;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoginFormRequest;
 use App\Http\Requests\RegisterUserFormRequest;
 use App\Http\Resources\UserResource;
 use App\Services\AuthService;
@@ -16,15 +17,15 @@ class AuthController extends Controller
         private AuthService $authService
     ) {}
 
-    public function login(LoginData $credentials)
+    public function login(LoginFormRequest $request)
     {
+        $loginResultDto = $this->authService->login($request->paraDto());
 
-        $userAndCookie = $this->authService->login($credentials);
-
-        return response()->json([
-            "message" => "Logado com sucesso",
-            "user" => $userAndCookie['user']
-        ], Response::HTTP_OK)->withCookie($userAndCookie['cookie']);
+        return (new UserResource($loginResultDto->user))
+            ->additional(["message" => "Login efetuado com sucesso"])
+            ->response()
+            ->setStatusCode(Response::HTTP_OK)
+            ->withCookie($loginResultDto->cookie);
     }
 
     public function register(RegisterUserFormRequest $request)
