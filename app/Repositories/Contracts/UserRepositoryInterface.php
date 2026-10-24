@@ -2,7 +2,9 @@
 
 namespace App\Repositories\Contracts;
 
+use App\Models\User;
+
 interface UserRepositoryInterface
 {
-    public function create(array $dadosUser): void;
+    public function create(array $dadosUser): User;
 }
