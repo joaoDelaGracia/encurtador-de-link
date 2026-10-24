@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Data\Auth\LoginData;
+use App\Data\Auth\LoginResultDto;
 use App\Data\Auth\RegisterDataDto;
 use App\Data\Users\UsersData;
 use App\Exceptions\InvalidCredentialsException;
@@ -20,7 +21,7 @@ class AuthService
         private UserRepositoryInterface $repository
     ) {}
 
-    public function login(LoginData $credentials)
+    public function login(LoginData $credentials): LoginResultDto
     {
 
         $token = Auth::attempt($credentials->toArray());
@@ -29,14 +30,10 @@ class AuthService
             throw new InvalidCredentialsException();
         }
 
-        $user = UsersData::from(Auth::user());
-
+        $user = Auth::user();
         $cookie = cookie('jwt', $token, 30, null, null, true);
 
-        return [
-            "cookie" => $cookie,
-            "user" => $user
-        ];
+        return new LoginResultDto($cookie, $user);
 
     }
 
