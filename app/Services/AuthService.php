@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Data\Auth\LoginData;
+use App\Data\Users\UsersData;
 use App\Exceptions\InvalidCredentialsException;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,7 +14,7 @@ class AuthService
      */
     public function __construct() {}
 
-    public function login($credentials)
+    public function login(LoginData $credentials)
     {
 
         $token = Auth::attempt($credentials);
@@ -21,14 +23,15 @@ class AuthService
             throw new InvalidCredentialsException();
         }
 
-        $user = Auth::user();
+        $user = UsersData::from(Auth::user());
 
-        $cookie = cookie('jwt', $token, 60 * 24, null, null, true);
+        $cookie = cookie('jwt', $token, 30, null, null, true);
 
         return [
             "cookie" => $cookie,
             "user" => $user
         ];
+
     }
 
     public function register() {
