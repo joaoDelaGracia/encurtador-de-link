@@ -8,12 +8,12 @@ use App\Repositories\Contracts\UserRepositoryInterface;
 class UserRepository implements UserRepositoryInterface
 {
 
-    public function create(array $dadosUser): void {
+    public function create(array $dadosUser): User
+    {
 
-        User::create(
+        return User::create(
             $dadosUser
         );
 
     }
-
 }
