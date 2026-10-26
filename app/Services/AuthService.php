@@ -31,10 +31,15 @@ class AuthService
         }
 
         $user = Auth::user();
-        $cookie = cookie('jwt', $token, 30, null, null, true);
+        $cookie = cookie('auth_token', $token, 30, null, null, true);
 
         return new LoginResultDto($cookie, $user);
 
+    }
+
+    public function refresh()
+    {
+        
     }
 
     public function register(RegisterDataDto $registerDataDto): User {

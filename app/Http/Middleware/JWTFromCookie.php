@@ -16,7 +16,7 @@ class JWTFromCookie
     public function handle(Request $request, Closure $next): Response
     {
 
-        if($token = $request->cookie('token')){
+        if($token = $request->cookie('auth_token')){
             $request->headers->set('Authorization', 'Bearer '. $token);
         }
 
