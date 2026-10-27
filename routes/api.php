@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\LinkController;
+use App\Http\Middleware\JWTFromCookie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -13,6 +14,7 @@ Route::prefix('auth')->group(function (): void {
 
     Route::post('/login', [AuthController::class, "login"]);
     Route::post('/register', [AuthController::class, "register"]);
+    Route::post('/refresh', [AuthController::class, "refresh"])->middleware(JWTFromCookie::class);
 });
 
 Route::middleware('auth:api')->prefix('adm')->group(function (): void {
