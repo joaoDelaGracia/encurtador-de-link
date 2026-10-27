@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Data\Auth\LoginData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginFormRequest;
 use App\Http\Requests\RegisterUserFormRequest;
 use App\Http\Resources\UserResource;
 use App\Services\AuthService;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
@@ -40,5 +40,14 @@ class AuthController extends Controller
 
     public function logout() {}
 
-    public function refresh() {}
+
+    public function refresh()
+    {
+
+        $cookie = $this->authService->refresh();
+
+        return response()
+            ->json([], Response::HTTP_OK)
+            ->withCookie($cookie);
+    }
 }
