@@ -35,9 +35,13 @@ class LinkController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(int $idLink)
     {
-        //
+        $linkModel = $this->linkService->find($idLink);
+
+        return (new LinkResource($linkModel))
+            ->response()
+            ->setStatusCode(Response::HTTP_CREATED);
     }
 
     /**
