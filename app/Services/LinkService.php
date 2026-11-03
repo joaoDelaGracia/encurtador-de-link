@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Data\Link\RegisterLinkDto;
+use App\Models\Link;
 use App\Models\User;
 use App\Repositories\Contracts\LinkRepositoryInterface;
 use Illuminate\Database\UniqueConstraintViolationException;
@@ -38,5 +39,10 @@ class LinkService
         }
 
         throw new RuntimeException("Não foi possível gerar um código único, tente novamente.");
+    }
+
+    public function find(int $idLink): Link
+    {
+        return $this->repository->find($idLink);
     }
 }
