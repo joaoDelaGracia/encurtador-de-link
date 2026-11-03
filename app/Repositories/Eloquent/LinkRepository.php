@@ -21,4 +21,9 @@ class LinkRepository implements LinkRepositoryInterface
             ]
         );
     }
+
+    public function find(int $idLink): Link
+    {
+        return Link::findOrFail($idLink);
+    }
 }
