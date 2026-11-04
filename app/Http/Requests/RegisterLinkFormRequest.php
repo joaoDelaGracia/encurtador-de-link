@@ -48,7 +48,7 @@ class RegisterLinkFormRequest extends FormRequest
         ];
     }
 
-    public function paraDto(): RegisterLinkDto
+    public function toDto(): RegisterLinkDto
     {
         return RegisterLinkDto::from($this->validated());
     }

@@ -48,7 +48,7 @@ class LoginFormRequest extends FormRequest
         ];
     }
 
-    public function paraDto(): LoginData
+    public function toDto(): LoginData
     {
         return LoginData::from($this->validated());
     }
