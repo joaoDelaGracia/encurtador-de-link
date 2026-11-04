@@ -2,9 +2,9 @@
 
 namespace App\Services;
 
-use App\Data\Auth\LoginData;
+use App\Data\Auth\LoginDto;
 use App\Data\Auth\LoginResultDto;
-use App\Data\Auth\RegisterDataDto;
+use App\Data\Auth\RegisterDto;
 use App\Data\Users\UsersData;
 use App\Exceptions\InvalidCredentialsException;
 use App\Exceptions\RefreshTokenExpiredException;
@@ -23,7 +23,7 @@ class AuthService
         private UserRepositoryInterface $repository
     ) {}
 
-    public function login(LoginData $credentials): LoginResultDto
+    public function login(LoginDto $credentials): LoginResultDto
     {
 
         $token = Auth::attempt($credentials->toArray());
@@ -49,12 +49,12 @@ class AuthService
         }
     }
 
-    public function register(RegisterDataDto $registerDataDto): User
+    public function register(RegisterDto $registerDto): User
     {
 
-        return DB::transaction(function () use ($registerDataDto): User {
+        return DB::transaction(function () use ($registerDto): User {
 
-            return $this->repository->create($registerDataDto->toArray());
+            return $this->repository->create($registerDto->toArray());
         });
     }
 }
