@@ -50,7 +50,7 @@ class RegisterLinkFormRequest extends FormRequest
 
     public function paraDto(): RegisterLinkDto
     {
-        return RegisterLinkDto::from($this->toArray());
+        return RegisterLinkDto::from($this->validated());
     }
 
 }

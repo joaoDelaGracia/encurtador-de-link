@@ -56,6 +56,6 @@ class RegisterUserFormRequest extends FormRequest
 
     public function paraDto(): RegisterDataDto
     {
-        return RegisterDataDto::createDto($this->toArray());
+        return RegisterDataDto::createDto($this->validated());
     }
 }

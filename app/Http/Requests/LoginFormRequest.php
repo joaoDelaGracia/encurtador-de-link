@@ -50,7 +50,7 @@ class LoginFormRequest extends FormRequest
 
     public function paraDto(): LoginData
     {
-        return LoginData::from($this->toArray());
+        return LoginData::from($this->validated());
     }
 
 }
