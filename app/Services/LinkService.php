@@ -45,4 +45,9 @@ class LinkService
     {
         return $this->repository->find($idLink);
     }
+
+    public function getBySlug(string $slug): Link
+    {
+        return $this->repository->getBySlug($slug);
+    }
 }
