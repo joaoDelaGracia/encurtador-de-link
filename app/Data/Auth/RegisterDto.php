@@ -4,7 +4,7 @@ namespace App\Data\Auth;
 
 use Spatie\LaravelData\Data;
 
-class RegisterDataDto extends Data
+class RegisterDto extends Data
 {
     public function __construct(
         public readonly string $name,

@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Data\Auth\LoginData;
+use App\Data\Auth\LoginDto;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Override;
@@ -48,9 +48,9 @@ class LoginFormRequest extends FormRequest
         ];
     }
 
-    public function toDto(): LoginData
+    public function toDto(): LoginDto
     {
-        return LoginData::from($this->validated());
+        return LoginDto::from($this->validated());
     }
 
 }
