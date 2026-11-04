@@ -26,4 +26,9 @@ class LinkRepository implements LinkRepositoryInterface
     {
         return Link::findOrFail($idLink);
     }
+
+    public function getBySlug(string $slug): Link
+    {
+        return Link::where('short_code', $slug)->firstOrFail();
+    }
 }
