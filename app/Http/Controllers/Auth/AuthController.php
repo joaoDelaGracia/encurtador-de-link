@@ -2,43 +2,52 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Data\Auth\LoginData;
-use App\Data\Auth\RegisterData;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoginFormRequest;
+use App\Http\Requests\RegisterUserFormRequest;
+use App\Http\Resources\UserResource;
 use App\Services\AuthService;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
 {
 
     public function __construct(
         private AuthService $authService
-    )
+    ) {}
+
+    public function login(LoginFormRequest $request)
     {
-        
+        $loginResultDto = $this->authService->login($request->paraDto());
+
+        return (new UserResource($loginResultDto->user))
+            ->additional(["message" => "Login efetuado com sucesso"])
+            ->response()
+            ->setStatusCode(Response::HTTP_OK)
+            ->withCookie($loginResultDto->cookie);
     }
 
-    public function login(LoginData $credentials)
+    public function register(RegisterUserFormRequest $request)
     {
 
-        $userAndCookie = $this->authService->login($credentials);
-        
-        return response()->json([
-            "message" => "Logado com sucesso",
-            "user" => $userAndCookie['user']
-        ], Response::HTTP_OK)->withCookie($userAndCookie['cookie']);
+        $user = $this->authService->register($request->paraDto());
 
-    }
-
-    public function register(RegisterData $registerData) {
-
-        $this->authService->register($registerData);
-
+        return (new UserResource($user))
+            ->response()
+            ->setStatusCode(Response::HTTP_CREATED);
     }
 
     public function logout() {}
 
-    public function refresh() {}
+
+    public function refresh()
+    {
+
+        $cookie = $this->authService->refresh();
+
+        return response()
+            ->json([], Response::HTTP_OK)
+            ->withCookie($cookie);
+    }
 }
