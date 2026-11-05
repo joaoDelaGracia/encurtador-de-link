@@ -5,7 +5,7 @@ namespace App\Data\Link;
 use DateTime;
 use Spatie\LaravelData\Data;
 
-class ClickLinkDto extends Data
+class LinkClickDto extends Data
 {
     /**
      * Create a new class instance.

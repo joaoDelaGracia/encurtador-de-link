@@ -2,12 +2,12 @@
 
 namespace App\Jobs;
 
-use App\Data\Link\ClickLinkDto;
+use App\Data\Link\LinkClickDto;
 use App\Services\AnalyticService;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 
-class RegisterClickLinkJob implements ShouldQueue
+class RegisterLinkClickJob implements ShouldQueue
 {
     use Queueable;
 
@@ -18,12 +18,10 @@ class RegisterClickLinkJob implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(ClickLinkDto $dto, int $id) {}
+    public function __construct(LinkClickDto $dto, int $id) {}
 
     /**
      * Execute the job.
      */
-    public function handle(AnalyticService $analyticService): void {
-        
-    }
+    public function handle(AnalyticService $analyticService): void {}
 }

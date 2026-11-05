@@ -2,14 +2,14 @@
 
 namespace App\Http\Requests;
 
-use App\Data\Link\ClickLinkDto;
+use App\Data\Link\LinkClickDto;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Jenssegers\Agent\Agent;
 
-class ClickLinkFormRequest extends FormRequest
+class LinkClickFormRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -31,12 +31,12 @@ class ClickLinkFormRequest extends FormRequest
         ];
     }
 
-    public function toDto(): ClickLinkDto
+    public function toDto(): LinkClickDto
     {
         $agent = new Agent();
         $agent->setUserAgent($this->userAgent());
-        
-        return ClickLinkDto::from([
+
+        return LinkClickDto::from([
             'clickedAt' => Carbon::now(),
             'referrer' => $this->headers->get('referer'),
             'userAgent' => $agent->getUserAgent(),
