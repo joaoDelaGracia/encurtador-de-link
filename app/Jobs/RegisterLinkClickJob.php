@@ -18,10 +18,17 @@ class RegisterLinkClickJob implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(LinkClickDto $dto, int $id) {}
+    public function __construct(
+        public readonly LinkClickDto $dto,
+        public readonly int $linkId
+    ) {}
 
     /**
      * Execute the job.
      */
-    public function handle(AnalyticService $analyticService): void {}
+    public function handle(AnalyticService $analyticService): void
+    {
+
+        $analyticService->recordClick($this->dto, $this->linkId);
+    }
 }
