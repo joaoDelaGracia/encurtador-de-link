@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('ip_hash', 255)->nullable();
             $table->string('country', 255)->nullable();
             $table->string('device_type', 255)->nullable();
-            $table->timestamps();
         });
     }
 
