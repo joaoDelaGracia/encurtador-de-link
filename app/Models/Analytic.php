@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Analytic extends Model
 {
@@ -15,5 +16,10 @@ class Analytic extends Model
         'country',
         'device_type'
     ];
+
+    public function link(): BelongsTo
+    {
+        return $this->belongsTo(Link::class);
+    }
 
 }
