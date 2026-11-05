@@ -25,7 +25,7 @@ class LinkController extends Controller
      */
     public function store(RegisterLinkFormRequest $request)
     {
-        $linkModel = $this->linkService->create($request->paraDto(), $request->user());
+        $linkModel = $this->linkService->create($request->toDto(), $request->user());
 
         return (new LinkResource($linkModel))
             ->response()

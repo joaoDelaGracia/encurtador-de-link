@@ -19,7 +19,7 @@ class AuthController extends Controller
 
     public function login(LoginFormRequest $request)
     {
-        $loginResultDto = $this->authService->login($request->paraDto());
+        $loginResultDto = $this->authService->login($request->toDto());
 
         return (new UserResource($loginResultDto->user))
             ->additional(["message" => "Login efetuado com sucesso"])
@@ -31,7 +31,7 @@ class AuthController extends Controller
     public function register(RegisterUserFormRequest $request)
     {
 
-        $user = $this->authService->register($request->paraDto());
+        $user = $this->authService->register($request->toDto());
 
         return (new UserResource($user))
             ->response()
