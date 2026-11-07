@@ -17,6 +17,8 @@ class Analytic extends Model
         'device_type'
     ];
 
+    public $timestamps = false;
+
     public function link(): BelongsTo
     {
         return $this->belongsTo(Link::class);

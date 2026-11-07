@@ -31,4 +31,9 @@ class LinkRepository implements LinkRepositoryInterface
     {
         return Link::where('short_code', $slug)->firstOrFail();
     }
+
+    public function incrementClickCount(int $linkId): void
+    {
+        Link::whereKey($linkId)->increment('clicks_count');
+    }
 }
