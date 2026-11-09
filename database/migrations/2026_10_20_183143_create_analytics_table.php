@@ -18,8 +18,10 @@ return new class extends Migration
             $table->text('referrer')->nullable();
             $table->string('user_agent', 255)->nullable();
             $table->string('ip_hash', 255)->nullable();
-            $table->string('country', 255)->nullable();
+            $table->string('country', 255)->nullable(); 
             $table->string('device_type', 255)->nullable();
+
+            $table->index(['link_id', 'clicked_at']);
         });
     }
 

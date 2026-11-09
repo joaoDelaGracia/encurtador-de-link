@@ -21,6 +21,8 @@ return new class extends Migration
             $table->timestamp('expires_at')->nullable();
             $table->bigInteger('clicks_count')->default(0);
             $table->timestamps();
+
+            $table->index('user_id');
         });
     }
 
