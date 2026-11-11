@@ -2,7 +2,10 @@
 
 namespace App\Services;
 
+use App\Data\Analytics\AnalyticsFilterDto;
 use App\Data\Link\LinkClickDto;
+use App\Enums\AnalyticMetricEnum;
+use App\Models\Link;
 use App\Repositories\Contracts\AnalyticRepositoryInterface;
 use App\Repositories\Contracts\LinkRepositoryInterface;
 use Illuminate\Support\Facades\Cache;
@@ -47,6 +50,30 @@ class AnalyticService
             Cache::forget($keyCache);
             report($e);
         }
+    }
+
+    public function getClicksPerPeriod(AnalyticsFilterDto $dto, int $idLink)
+    {
+        return $this->repository->getClicksPerPeriod(
+            linkId: $idLink,
+            from: $dto->from,
+            to: $dto->to,
+            granularity: $dto->granularity,
+            timezone: $dto->timezone
+        );
+    }
+
+    public function getSummary(AnalyticsFilterDto $dto, int $idLink): array
+    {
+        $result = [];
+
+        foreach ($dto->include as $metric) {
+            $result[$metric->value] = match ($metric) {
+                AnalyticMetricEnum::Clicks => $this->getClicksPerPeriod($dto, $idLink)
+            };
+        }
+
+        return $result;
     }
 
     private function hashIp(string $ip): string

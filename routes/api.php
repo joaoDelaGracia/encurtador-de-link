@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\LinkAnalyticsController;
 use App\Http\Controllers\LinkController;
 use App\Http\Middleware\JWTFromCookie;
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ Route::prefix('auth')->group(function (): void {
 });
 
 Route::middleware('auth:api')->prefix('adm')->group(function (): void {
-
     Route::post('/link', [LinkController::class, 'store']);
     Route::get('/link/{idLink}', [LinkController::class, 'show']);
+    Route::get('/link/{idLink}/analytics/summary', [LinkAnalyticsController::class, 'summary']);
 });
