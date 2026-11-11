@@ -41,4 +41,23 @@ class AnalyticRepository implements AnalyticRepositoryInterface
             ->orderBy('period')
             ->get();
     }
+
+    public function getTopCountries(int $idLink): Collection
+    {
+        return Analytic::query()
+            ->where('link_id', $idLink)
+            ->selectRaw("country, COUNT(*) AS total")
+            ->groupBy('country')
+            ->orderByDesc('total')
+            ->get();
+    }
+
+    public function getDeviceDistribution(int $idLink): Collection
+    {
+        return Analytic::query()
+            ->where('link_id', $idLink)
+            ->selectRaw("device_type, COUNT(*) AS total")
+            ->groupBy('device_type')
+            ->get();
+    }
 }

@@ -11,4 +11,6 @@ interface AnalyticRepositoryInterface
 {
     public function create(int $linkId, DateTime $clickedAt, string $referrer, string $userAgent, string $ipHash, string $country, string $deviceType): void;
     public function getClicksPerPeriod(int $linkId, CarbonInterface $from, CarbonInterface $to, GranularityEnum $granularity = GranularityEnum::Day, string $timezone = 'UTC'): Collection;
+    public function getTopCountries(int $idLink): Collection;
+    public function getDeviceDistribution(int $idLink): Collection;
 }

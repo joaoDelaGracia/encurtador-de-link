@@ -8,6 +8,7 @@ use App\Enums\AnalyticMetricEnum;
 use App\Models\Link;
 use App\Repositories\Contracts\AnalyticRepositoryInterface;
 use App\Repositories\Contracts\LinkRepositoryInterface;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Throwable;
@@ -52,7 +53,7 @@ class AnalyticService
         }
     }
 
-    public function getClicksPerPeriod(AnalyticsFilterDto $dto, int $idLink)
+    public function getClicksPerPeriod(AnalyticsFilterDto $dto, int $idLink): Collection
     {
         return $this->repository->getClicksPerPeriod(
             linkId: $idLink,
@@ -63,13 +64,25 @@ class AnalyticService
         );
     }
 
+    public function getTopCountries(int $idLink): Collection
+    {
+        return $this->repository->getTopCountries(idLink: $idLink);
+    }
+
+    public function getDeviceDistribution(int $idLink)
+    {
+        return $this->repository->getDeviceDistribution(idLink: $idLink);
+    }
+
     public function getSummary(AnalyticsFilterDto $dto, int $idLink): array
     {
         $result = [];
 
         foreach ($dto->include as $metric) {
             $result[$metric->value] = match ($metric) {
-                AnalyticMetricEnum::Clicks => $this->getClicksPerPeriod($dto, $idLink)
+                AnalyticMetricEnum::Clicks => $this->getClicksPerPeriod($dto, $idLink),
+                AnalyticMetricEnum::Countries => $this->getTopCountries($idLink),
+                AnalyticMetricEnum::Devices => $this->getDeviceDistribution($idLink),
             };
         }
 
