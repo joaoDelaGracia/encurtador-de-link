@@ -74,17 +74,19 @@ class AnalyticService
         return $this->repository->getDeviceDistribution(idLink: $idLink);
     }
 
-    public function getSummary(AnalyticsFilterDto $dto, int $idLink): array
+    public function getSummary(AnalyticsFilterDto $dto, Link $link): array
     {
         $result = [];
 
         foreach ($dto->include as $metric) {
-            $result[$metric->value] = match ($metric) {
-                AnalyticMetricEnum::Clicks => $this->getClicksPerPeriod($dto, $idLink),
-                AnalyticMetricEnum::Countries => $this->getTopCountries($idLink),
-                AnalyticMetricEnum::Devices => $this->getDeviceDistribution($idLink),
+            $result['metrics'][$metric->value] = match ($metric) {
+                AnalyticMetricEnum::Clicks => $this->getClicksPerPeriod($dto, $link->id),
+                AnalyticMetricEnum::Countries => $this->getTopCountries($link->id),
+                AnalyticMetricEnum::Devices => $this->getDeviceDistribution($link->id),
             };
         }
+
+        $result['total_clicks'] = $link->clicks_count;
 
         return $result;
     }

@@ -21,5 +21,5 @@ Route::prefix('auth')->group(function (): void {
 Route::middleware('auth:api')->prefix('adm')->group(function (): void {
     Route::post('/link', [LinkController::class, 'store']);
     Route::get('/link/{idLink}', [LinkController::class, 'show']);
-    Route::get('/link/{idLink}/analytics/summary', [LinkAnalyticsController::class, 'summary']);
+    Route::get('/link/{link}/analytics/summary', [LinkAnalyticsController::class, 'summary']);
 });
